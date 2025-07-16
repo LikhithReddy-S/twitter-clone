@@ -1,10 +1,17 @@
 const express = require('express')
+const dotenv = require('dotenv');
+
+const authRoutes = require('./routes/auth.routes.js')
+const mongodbConnect = require('./db/connectMongoDb.js');
+
+dotenv.config()
+
 const app = express();
+const PORT = process.env.PORT||8000
 
-app.get('/',(req,res)=>{
-    res.send("Server is ready")
-})
+app.use('/api/auth',authRoutes);
 
-app.listen(8000,()=>{
-    console.log(`server is running on http://localhost:3000`)
+app.listen(PORT,()=>{
+    console.log(`server is running on http://localhost:${PORT}`)
+    mongodbConnect();
 })
